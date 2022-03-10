@@ -4,9 +4,15 @@
 
 Dependency injection is done through controllers class constructor. After that, service is available inside that class/controller.
 
-## DTO
+## DTO - data transfer object
 
 DTO is class that stores information about data types for properties passed to another function/api/procedure. Allows to change property type at one place and changes will be propagated. DTO can be created for each model, in dto subfolder.
+
+## Validation and error handling
+
+To use pipes for validation, validator and transformer package needs to be installed. It is done with command:
+npm install class-validator class-transformer --save
+After that, validators and pipes are used like decorators over properties and methods.
 
 ## Running the app
 
