@@ -13,6 +13,7 @@ DTO is class that stores information about data types for properties passed to a
 To use pipes for validation, validator and transformer package needs to be installed. It is done with command:
 npm install class-validator class-transformer --save
 After that, validators and pipes are used like decorators over properties and methods.
+For validations, create class/pipe inside pipes subfolder, of each model/class, and invoke it inside decorators (@Body, @Query, @Param) adding ValidationPipe. No need to create new instance, it is done automaticaly. Pipe class has to implement PipeTransform interface, that require transform() function with parameters value, and optional parameter metadata. This metod returns transformed value (if needed) or throw exception.
 
 ## Running the app
 
