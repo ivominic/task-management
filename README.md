@@ -15,6 +15,21 @@ npm install class-validator class-transformer --save
 After that, validators and pipes are used like decorators over properties and methods.
 For validations, create class/pipe inside pipes subfolder, of each model/class, and invoke it inside decorators (@Body, @Query, @Param) adding ValidationPipe. No need to create new instance, it is done automaticaly. Pipe class has to implement PipeTransform interface, that require transform() function with parameters value, and optional parameter metadata. This metod returns transformed value (if needed) or throw exception.
 
+## Database and TypeORM
+
+npm install @nestjs/typeorm typeorm pg --save
+This command installs specific bridge that nestjs uses to work with typeorm, typeorm and driver for PostgreSQL database.
+There are multiple ways of configuring database connection. One way is static json file, another one is providing the data as an object, third way would be providing data asynchronously from a service.
+Create new folder under the src folder and inside typeorm.config.ts file with export of TypeOrmModuleOptions object.
+
+## Entities
+
+Entities help us not to write queries. Created file task.entity.ts where we are declaring class to map database table.
+
+## Repositories
+
+Creating new file task.repository.ts to export repository class which we import in task.module.ts, forFeature, and it makes it consumable from service.
+
 ## Running the app
 
 ```bash
