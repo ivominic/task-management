@@ -37,6 +37,10 @@ Command "nest g module auth" creates module that will contain all things related
 
 Then, dto folder is created, inside auth folder, with auth-credentials.dto.ts file that will store dto for user credentials, that will, for now, be used for sign-up and sign-in methods, since both of them use only username and password. There will be applied validation rules. @Matches decorator sets regular expression that filed needs to fulfill to be validated. ValidationPipe needs to be added into auth.controller, for selected method, in @Body() decorator. This covers validation of parameters. Passing message object, as a second part of the @Matches() decorator will present that message to the user, if password doesn't pass that validation.
 
+## Hash and salt
+
+First install bcrypt using command "npm i bcrypt --save". Then in user.repository.ts, before saving user, crypt password. Add new column "salt" in user.entity and store salt, which is different for each user.
+
 ## Running the app
 
 ```bash
