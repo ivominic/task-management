@@ -39,7 +39,7 @@ Then, dto folder is created, inside auth folder, with auth-credentials.dto.ts fi
 
 ## Hash and salt
 
-First install bcrypt using command "npm i bcrypt --save". Then in user.repository.ts, before saving user, crypt password. Add new column "salt" in user.entity and store salt, which is different for each user.
+First install bcrypt using command "npm i bcrypt --save". Then in user.repository.ts, before saving user, crypt password. Add new column "salt" in user.entity and store salt, which is different for each user. In user.entity is created method for validating password (no need to pass user entity that way), and called from signin methods in controller->service->repository. If user is authenticated, signin method returns username, null otherwise.
 
 ## Running the app
 
