@@ -41,6 +41,10 @@ Then, dto folder is created, inside auth folder, with auth-credentials.dto.ts fi
 
 First install bcrypt using command "npm i bcrypt --save". Then in user.repository.ts, before saving user, crypt password. Add new column "salt" in user.entity and store salt, which is different for each user. In user.entity is created method for validating password (no need to pass user entity that way), and called from signin methods in controller->service->repository. If user is authenticated, signin method returns username, null otherwise.
 
+## Passport.js
+
+First install several packages: "npm i @nestjs/jwt @nestjs/passport passport passport-jwt". Then JwtModule should be imported in auth.module.ts and using JwtModule.register() need to provide configuration, like secret - which is secret value that will be used to sign token and setting expire time of jwt to 3600 seconds. In the same auth module, we are importing nad registering passport module - setting appropriate strategy. Registering JwtModule, we are able to use JwtService in auth.service.ts. In signIn method, after validating username, we are creating payload that stores username. It can store additional information like roles and what should be disabled. Then we generate jwt for payload, and return signed accessToken. It is better to extract payload structure into interface, because it will be used throughout application. For that, we are going to create new file in auth folder: jwt-payload.interface.ts and use that interface in signIn method to define type of payload object. Then change return type of signIn method to Promise<{accessToken: string{}>. Same is done for signIn method in auth.controller.ts. At this point, application returns access token for each valid call of signin method.
+
 ## Running the app
 
 ```bash
