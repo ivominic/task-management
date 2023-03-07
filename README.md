@@ -55,6 +55,10 @@ Retrieving user from request can be simplified by creating decorator. We create 
 
 First, we import AuthModule to TasksModule to have all methods regarding authentication available in TasksModule. Then we use AuthGuard() on Tasks controller. Then, call get method tasks with access token passed in Auth tab of Postman/Thunder client and select Bearer option.
 
+## OneToMany and ManyToOne relations
+
+In user.entity and task.entity we add columns tasks and user, with type, accessing inverse object (user from task and task object from user entity) as well as eager option. If this option is set to true, like for tasks array in user entity, it means that each user object is loaded with all tasks for that user object (related to that user). In task.controller, createTask method will be expanded with one additional parameter user, which will decorate with previously created decorator @GetUser(). createTask method in task.repository returns whole user object with created task. That is the reason for deleting task.user after saving task. That deletes user only from returning object, not from database.
+
 ## Running the app
 
 ```bash
