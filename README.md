@@ -47,6 +47,14 @@ First install several packages: "npm i @nestjs/jwt @nestjs/passport passport pas
 JWT strategy will be defined in file jwt.strategy.ts. In constructor -> super will be defined how to get JWT and secret (same value as in auth.module.ts register method). Each strategy (file) has to have validate method. If secret doesn't match, it will throw an error, else validate() method will be called. At moment of passing payload to validate method, that value is already verified, so we know it is legitimate. Validate method returns user object (entity). We need to add JwtStrategy as a provider in auth.module.ts. Also, we are setting exports for auth.module, so it can be used in other modules that need this JWT strategy, as well as PassportModule, that, after configuring it, can be used to guard methods in other modules.
 In auth.controller will be created temporary method test() that can be guarded with decorator @UseGuards(AuthGuard()) and will retrieve entire request object. This method (test) will return error 401 Unauthorized if not provided with access token, that needs to be generated from signin method. Because of the defined strategy to extract bearer token from auth header, we need to pass received access token as a bearer. It will be passed as Authorization parameter in the Headers tab of post request and value will be "Bearer ${accessTokenValue}" without quotation marks. Printing request, it will show complete user object, so we can automatically use that user for the rest of the method. AuthGuard can be put on controller level, or on each method separately.
 
+## GetUser decorator
+
+Retrieving user from request can be simplified by creating decorator. We create file get-user.decorator.ts and export GetUser method that accepts data and ExecutionContext and returns user object from request. Data won't be used for now. To make this work, we change parameters for test method in auth.controller in a way to replace test(@Req() req) with test(@GetUser() user: User).
+
+## Tasks module
+
+First, we import AuthModule to TasksModule to have all methods regarding authentication available in TasksModule. Then we use AuthGuard() on Tasks controller. Then, call get method tasks with access token passed in Auth tab of Postman/Thunder client and select Bearer option.
+
 ## Running the app
 
 ```bash
