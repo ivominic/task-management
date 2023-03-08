@@ -67,6 +67,10 @@ Logger has several levels: General, Warning, Error, Debug and Verbose. It is par
 
 Install config package with command "npm i config". This package expects "config" folder in the root folder of the application, so we need to create it and file named default.yml in it. Populate this file with parameters regarding server port, database and jwt expiration time. Then we create development.yml file in the same folder. This file will inherit all values from default.yml and override some of them with values specific for development stage. Next is production.yml file. To consume this configurations, in main.ts we need to import config package and get object from yml files using config.get('object_name'). If environment variable NODE_ENV is not set, it means we are in development stage. In main.ts we first try to read port from environment variable PORT, and if not set, then read from yml file. Next, we change src/config/typeorm.config.ts file, replacing hardcoded values with config. Anything we put into default.yml file will be available in all stages (dev, prod, test...) and we can override values with other files. Next file to edit is auth.module.ts to change values regarding JWT. Same change is done in jwt.strategy.ts file.
 
+## CORS
+
+To enable CORS, in main.ts we should to add only one line: app.enableCors();. In production, this should be removed, and only whitelist addresses from which we allow consuming this services.
+
 ## Running the app
 
 ```bash
