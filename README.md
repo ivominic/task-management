@@ -20,7 +20,7 @@ For validations, create class/pipe inside pipes subfolder, of each model/class, 
 npm install @nestjs/typeorm typeorm pg --save
 This command installs specific bridge that nestjs uses to work with typeorm, typeorm and driver for PostgreSQL database.
 There are multiple ways of configuring database connection. One way is static json file, another one is providing the data as an object, third way would be providing data asynchronously from a service.
-Create new folder under the src folder and inside typeorm.config.ts file with export of TypeOrmModuleOptions object.
+Create new folder "config" under the src folder and inside typeorm.config.ts file with export of TypeOrmModuleOptions object. Import this in app.modules.ts file.
 QueryBuilder is a part of TypeORM that helps creating database queries.
 
 ## Entities
@@ -62,6 +62,10 @@ In user.entity and task.entity we add columns tasks and user, with type, accessi
 ## Logging
 
 Logger has several levels: General, Warning, Error, Debug and Verbose. It is part of @nestjs/common package and we will first create one logger in main.ts file, although it's not necessary. Logger has a context, and in main.ts file it will be 'bootstrap' because it is invoked in bootstrap() method. First logging will be after application runs, and it will log that application listening on specific port. In controller, services etc loggers are created as private members, with context as a parameter. Example in tasks.controller.ts. Logger.error() method can accept e.stack message as a second parameter.
+
+## Production configuration
+
+Install config package with command "npm i config". This package expects "config" folder in the root folder of the application, so we need to create it and file named default.yml in it. Populate this file with parameters regarding server port, database and jwt expiration time. Then we create development.yml file in the same folder. This file will inherit all values from default.yml and override some of them with values specific for development stage. Next is production.yml file. To consume this configurations, in main.ts we need to import config package and get object from yml files using config.get('object_name'). If environment variable NODE_ENV is not set, it means we are in development stage. In main.ts we first try to read port from environment variable PORT, and if not set, then read from yml file. Next, we change src/config/typeorm.config.ts file, replacing hardcoded values with config. Anything we put into default.yml file will be available in all stages (dev, prod, test...) and we can override values with other files. Next file to edit is auth.module.ts to change values regarding JWT. Same change is done in jwt.strategy.ts file.
 
 ## Running the app
 
