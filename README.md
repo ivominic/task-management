@@ -59,6 +59,10 @@ First, we import AuthModule to TasksModule to have all methods regarding authent
 
 In user.entity and task.entity we add columns tasks and user, with type, accessing inverse object (user from task and task object from user entity) as well as eager option. If this option is set to true, like for tasks array in user entity, it means that each user object is loaded with all tasks for that user object (related to that user). In task.controller, createTask method will be expanded with one additional parameter user, which will decorate with previously created decorator @GetUser(). createTask method in task.repository returns whole user object with created task. That is the reason for deleting task.user after saving task. That deletes user only from returning object, not from database. In task.entity we need to add userId column, if we want to use it in queries. This column is already created in database by ORM, when we created ManyToOne relations.
 
+## Logging
+
+Logger has several levels: General, Warning, Error, Debug and Verbose. It is part of @nestjs/common package and we will first create one logger in main.ts file, although it's not necessary. Logger has a context, and in main.ts file it will be 'bootstrap' because it is invoked in bootstrap() method. First logging will be after application runs, and it will log that application listening on specific port. In controller, services etc loggers are created as private members, with context as a parameter. Example in tasks.controller.ts. Logger.error() method can accept e.stack message as a second parameter.
+
 ## Running the app
 
 ```bash
