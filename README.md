@@ -71,6 +71,10 @@ Install config package with command "npm i config". This package expects "config
 
 To enable CORS, in main.ts we should to add only one line: app.enableCors();. In production, this should be removed, and only whitelist addresses from which we allow consuming this services.
 
+## Testing
+
+Nestjs comes with preinstalled testing framework - Jest. Jest expects that test files end with .spec.ts. We will create file task/task.service.spec.ts in src folder. This file will contain specifications for tests. Before running test, we need to create test.yml file in config folder, with parameters for testing. In this project, we have copied content from development.yml.Second option is to run test with NODE_ENV=development parameter and tests will use config file for development stage. Describe sets name of the test, and contains all test for class. Since we want to initialize object before each test, we well create initialization of global properties inside beforeEach() method. CreateTestingModule allows us to include only parts that we want to test, from original module. Mocking task repository is needed in order to not use our database, for object creating/updating/deleting. Object in this function is in parenthesis, which means it is going to be returned immediately. Module can be used after compiling.To test getTasks method, we need to mock it first (getTasks: jest.fn()). We also mocked user that will be used in all test. Test fail for me, because User could not be loaded from task.entity.ts
+
 ## Running the app
 
 ```bash
